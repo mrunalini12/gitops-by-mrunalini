@@ -1,0 +1,80 @@
+
+1. What is GitOps?
+
+GitOps is a modern DevOps practice where:
+
+Git is the single source of truth for infrastructure and application deployments.
+
+All changes are made via Git commits.
+
+A GitOps operator (like ArgoCD) continuously monitors Git and syncs changes to the Kubernetes cluster.
+
+Key Benefits:
+
+Version-controlled deployments
+
+Easy rollbacks using Git history
+
+Audit trails & CI/CD without scripting pipelines
+
+Faster, safer deployments using Git workflows
+
+2. What is ArgoCD and its Role?
+
+ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes.
+
+It continuously monitors your Git repository and automatically applies changes to your cluster when updates are made.
+
+ArgoCD's Responsibilities:
+
+Watches a Git repository for Kubernetes manifest files
+
+Detects when changes are made (e.g., updated image versions)
+
+Synchronizes the cluster to match the Git state
+
+Provides a UI and CLI to manage app deployments
+
+Supports automated or manual syncing
+
+In this project, ArgoCD:
+
+Watches our GitHub repo (gitops-demo)
+
+Applies manifests (deployment.yaml, service.yaml) into Kubernetes
+
+Auto-syncs when the image version or replica count is updated
+
+ 3. Live Update Demo – What Happens
+
+ Initial State:
+
+Git contains an NGINX deployment with image nginx:1.25
+
+ArgoCD syncs it and deploys the pod
+
+Update in GitHub:
+
+We change nginx:1.25 → nginx:1.26 in deployment.yaml
+
+Commit and push to Git
+
+ArgoCD Reaction:
+
+Detects a change in Git
+
+Auto-syncs the app
+
+Applies the new deployment
+
+Replaces the old pod with a new pod running nginx:1.26
+
+Verification:
+
+kubectl get pods
+
+kubectl describe pod <nginx-pod-name>
+
+You'll see the new container image running.
+
+That’s GitOps in action — no kubectl apply, just Git commits.
